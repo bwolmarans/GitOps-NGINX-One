@@ -2,7 +2,7 @@
 [![Community Support](https://badgen.net/badge/support/community/cyan?icon=awesome)](https://github.com/nginxinc/mtbChef/GitOps-NMS/blob/main/SUPPORT.md)
 <!-- [![Commercial Support](https://badgen.net/badge/support/commercial/cyan?icon=awesome)](<Insert URL>) -->
 
-# Demo: Managing NGINX Configs with NGINX One using Github Actions
+# Demo: Managing NGINX with NGINX One using GitOps
 This repository provides a sample Github Actions script that allows NGINX One users to manage versioning and deployment of NGINX configurations via Github actions.
 
 ## NGINX Configurations
