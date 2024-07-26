@@ -40,7 +40,7 @@ jobs:
 
       - name: API call to NGINX One Saas Console
         run: |
-          curl --location '${{ N1SC_HOSTNAME }}/${{ vars.N1SC_API_PATH }}/${{ vars.N1SC_NAMESPACE }}/instances/?filter_fields=instance_status&filter_ops=IN&filter_values=online&paginated=false' -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}' > instance_list.json
+          curl --location '${{ vars.N1SC_HOSTNAME }}/${{ vars.N1SC_API_PATH }}/${{ vars.N1SC_NAMESPACE }}/instances/?filter_fields=instance_status&filter_ops=IN&filter_values=online&paginated=false' -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}' > instance_list.json
           # app-nyc-01_instance_summary=$(jq '.' instance_list.json)
 
       - name: API call to NGINX One Saas Console
