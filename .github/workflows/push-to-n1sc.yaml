@@ -37,6 +37,7 @@ jobs:
           echo "DEFAULT_CONF_CONFIG_FILE=`cat app-nyc-01/etc/nginx/conf.d/default.conf | base64 -w 0`" >> $GITHUB_ENV
           echo "SSL_CERT=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.crt | base64 -w 0`" >> $GITHUB_ENV
           echo "SSL_KEY=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.key | base64 -w 0`" >> $GITHUB_ENV
+          echo "NGINX_ONE_CONFIG_JSON_BLOB=`cat - app-nyc-01/nginx_one_config_json_blob | base64 -w 0`" >> $GITHUB_ENV
 
       - name: API call to NGINX One Saas Console
         run: |
@@ -45,4 +46,4 @@ jobs:
 
       - name: API call to NGINX One Saas Console
         run: |
-          curl -X PUT --location 'https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/config' -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}' --data '{ "aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": "${{ env.NGINX_CONF_CONFIG_FILE }}", "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": 2756 }, { "contents": "${{ env.MIME_TYPES_CONFIG_FILE }}", "mtime": "1970-01-01T00:00:00Z", "name": "mime.types", "size": 2756} ], "name": "/etc/nginx" }, { "files": [ { "contents": "${{ env.DEFAULT_CONF_CONFIG_FILE }}", "mtime": "1970-01-01T00:00:00Z", "name": "default.conf", "size": 908 } ], "name": "/etc/nginx/conf.d" }], "object_id": "nc_Mw2aZnqkSkyB6g3dR6BdGw" }' -H "Content-Type: application/json"
+          curl -X PUT --location 'https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/config' -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}' --data '${{ env.NGINX_ONE_CONFIG_JSON_BLOB }}' -H "Content-Type: application/json"
