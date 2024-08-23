@@ -5,6 +5,15 @@
 # Demo: Managing NGINX with NGINX One using GitOps
 This repository provides a sample Github Actions script that allows NGINX One users to manage versioning and deployment of NGINX configurations via Github actions.
 
+## TLDR;
+1. Set your F5 Distributed Cloud bearer token in the Actions secrets
+2. Set your instance ID in the Actions Variables
+3. Note the first few lines of your nginx.conf on your actual app-nyc-01 instance, using NGINX One Cloud Console
+4. Edit app-nyc-01/etc/nginx/nginx.conf and add a comment, and commit. 
+5. That will trigger the actions workflow, you can go and view this running under Actions
+6. Repeat step 3, and note the comment added by this flow, indicating the instance has been updated by this project.
+   
+
 ## NGINX Configurations
 Configuration files are stored for each instance in this repository file structure.  See ```app-nyc-01``` for sample NGINX configurations found in nginx.conf
 
