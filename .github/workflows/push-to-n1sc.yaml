@@ -30,7 +30,7 @@ jobs:
           echo "N1SC_COMMIT_HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
           echo "N1SC_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
 
- - name: Set environment variable for base64 encoded config files
+      - name: Set environment variable for base64 encoded config files
         run: |
           echo "NGINX_CONF_CONFIG_FILE=`echo \# Modified by NGINX One API $(date) branch: ${{ env.N1SC_BRANCH }} commit hash: ${{ env.N1SC_COMMIT_HASH }} | cat - app-nyc-01/etc/nginx/nginx.conf | base64 -w 0`" >> $GITHUB_ENV
           echo "MIME_TYPES_CONFIG_FILE=`cat app-nyc-01/etc/nginx/mime.types | base64 -w 0`" >> $GITHUB_ENV
