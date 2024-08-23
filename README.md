@@ -7,8 +7,8 @@ This repository provides a sample Github Actions script that allows NGINX One us
 
 ## TLDR;
 1. Set your F5 Distributed Cloud bearer token in the Actions secrets
-2. Set your instance ID in the Actions Variables
-3. Note the first few lines of your nginx.conf on your actual app-nyc-01 instance, using NGINX One Cloud Console
+2. Set your instance ID in the Actions Variables. This was only tested with app-nyc-01, but might work with other instances. 
+3. Note the first few lines of your nginx.conf on your actual instance, using NGINX One Cloud Console
 4. Edit app-nyc-01/etc/nginx/nginx.conf and add a comment, and commit. 
 5. That will trigger the actions workflow, you can go and view this running under Actions
 6. Repeat step 3, and note the comment added by this flow, indicating the instance has been updated by this project.
