@@ -32,7 +32,7 @@ jobs:
 
       - name: Set environment variable for base64 encoded config files
         run: |
-          echo "NGINX_ONE_CONFIG_JSON_BLOB=`cat app-nyc-01/nginx_one_config_json_blob`" >> $GITHUB_ENV
+          #echo "NGINX_ONE_CONFIG_JSON_BLOB=`cat app-nyc-01/nginx_one_config_json_blob`" >> $GITHUB_ENV
 
       - name: API call to get instance list from NGINX One Saas Console
         run: |
