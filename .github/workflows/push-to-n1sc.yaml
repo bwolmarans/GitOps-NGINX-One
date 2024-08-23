@@ -32,7 +32,7 @@ jobs:
 
       - name: Set environment variable for base64 encoded config files
         run: |
-          #echo "NGINX_ONE_CONFIG_JSON_BLOB=`cat app-nyc-01/nginx_one_config_json_blob`" >> $GITHUB_ENV
+          echo "NGINX_ONE_CONFIG_JSON_BLOB=`cat app-nyc-01/nginx_one_config_json_blob`" >> $GITHUB_ENV
 
       - name: API call to get instance list from NGINX One Saas Console
         run: |
@@ -41,4 +41,4 @@ jobs:
 
       - name: API PUT to tell the NGINX One Saas Console to publish to the data plane
         run: |
-          curl -X PUT --location 'https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/config' -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}' --data '`cat app-nyc-01/nginx_one_config_json_blob`' -H "Content-Type: application/json"
+          curl -X PUT --location 'https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/config' -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}' --data '${{ env.NGINX_ONE_JSON_BLOB }}' -H "Content-Type: application/json"
