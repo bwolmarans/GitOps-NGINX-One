@@ -39,11 +39,11 @@ jobs:
           echo "SSL_KEY=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.key | base64 -w 0`" >> $GITHUB_ENV
           echo "NGINX_ONE_CONFIG_JSON_BLOB=`cat app-nyc-01/nginx_one_config_json_blob | base64 -w 0`" >> $GITHUB_ENV
 
-      - name: API call to NGINX One Saas Console
+      - name: API call to get instance list from NGINX One Saas Console
         run: |
           curl --location '${{ vars.N1SC_HOSTNAME }}/${{ vars.N1SC_API_PATH }}/${{ vars.N1SC_NAMESPACE }}/instances/?filter_fields=instance_status&filter_ops=IN&filter_values=online&paginated=false' -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}' > instance_list.json
           # app-nyc-01_instance_summary=$(jq '.' instance_list.json)
 
-      - name: API call to NGINX One Saas Console
+      - name: API PUT to tell the NGINX One Saas Console to publish to the data plane
         run: |
           curl -X PUT --location 'https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/config' -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}' --data '${{ env.NGINX_ONE_CONFIG_JSON_BLOB }}' -H "Content-Type: application/json"
