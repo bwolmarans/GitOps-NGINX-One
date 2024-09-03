@@ -47,6 +47,14 @@ jobs:
       - name: get publication id
         id: publication_id
         run: echo "PUBLICATION_ID=`cat reponse | jq -c '.object_id'` >> $GITHUB_ENV
+      
+      - name: check publication status
+        run: |
+          curl -X GET https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}'
+
+      - name: Sleep for 10 seconds
+          run: sleep 10s
+          shell: bash
         
       - name: check publication status
         run: |
