@@ -1,4 +1,4 @@
-name: Managing NGINX configs with Github and Github Actions
+name: NGINX One with Github and Github Actions
 
 # Controls when the workflow will run
 on:
