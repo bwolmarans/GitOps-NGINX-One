@@ -46,21 +46,22 @@ jobs:
       
       - name: get publication id
         id: publication_id
-        run: echo "PUBLICATION_ID=`cat reponse | jq -c '.object_id'` >> $GITHUB_ENV
+        run: |
+          echo "PUBLICATION_ID=`cat reponse | jq -c '.object_id'` >> $GITHUB_ENV
       
-      - name: check publication status
+      - name: check publication status1
         run: |
           curl -X GET https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}'
         
-      - name: check publication status
+      - name: check publication status2
         run: |
           curl -X GET https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}'
 
-      - name: check publication status
+      - name: check publication status3
         run: |
           curl -X GET https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}'
         
-      - name: check publication status
+      - name: check publication status4
         run: |
           curl -X GET https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer ${{ secrets.XC_BEARER_TOKEN }}'
 
