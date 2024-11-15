@@ -27,7 +27,8 @@ jobs:
         run: |
           echo "XC_BEARER_TOKEN=`echo -n "${{ secrets.XC_BEARER_TOKEN }}`" >> $GITHUB_ENV
           echo "N1SC_TIMESTAMP=`date -u +"%Y-%m-%dT%H:%M:%SZ"`" >> $GITHUB_ENV
-          echo "N1SC_COMMIT_HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+          #echo "N1SC_COMMIT_HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+          echo "N1SC_COMMIT_HASH=$(git show --pretty=format:"%H %s" -s HEAD)" >> $GITHUB_ENV
           echo "N1SC_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
 
       - name: Set environment variable for base64 encoded config files
