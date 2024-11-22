@@ -43,13 +43,13 @@ jobs:
 
       - name: PATCH the instance config
         run: |
-          curl -X PATCH --location 'https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/config' -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}' --data '{ "aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": "${{ env.NGINX_CONF_CONFIG_FILE }}", "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": ${{ env.NGINX_CONF_CONFIG_FILE_SIZE }} } ], "name": "/etc/nginx" } ] }' -H "Content-Type: application/json" -o response.json
+          curl -X PATCH --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/config' -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}' --data '{ "aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": "${{ env.NGINX_CONF_CONFIG_FILE }}", "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": ${{ env.NGINX_CONF_CONFIG_FILE_SIZE }} } ], "name": "/etc/nginx" } ] }' -H "Content-Type: application/json" -o response.json
           cat response.json
           echo "PUBLICATION_ID=`cat response.json | jq -c '.object_id'`" >> $GITHUB_ENV
       
       - name: check publication status1
         run: |
-          curl -X GET https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}' -o response.json
+          curl -X GET https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}' -o response.json
           cat response.json | jq -c .status
 
       - name: Sleep for 15 seconds
@@ -58,5 +58,5 @@ jobs:
       
       - name: check publication status2
         run: |
-          curl -X GET https://nginxone-team.staging.volterra.us/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}' -o response.json
+          curl -X GET https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}' -o response.json
           cat response.json | jq -c .status
