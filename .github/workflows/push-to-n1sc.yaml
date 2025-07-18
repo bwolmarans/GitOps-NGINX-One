@@ -50,12 +50,11 @@ jobs:
         id: list_instances
         run: |
           response=$(curl --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances'  -H 'Authorization: Bearer APIToken fail'); echo "response=$response" >> $GITHUB_OUTPUT
-
-      - name: Check if auth worked
-        run: |
           echo "Response: ${{ steps.list_instances.outputs.response }}"
-          if: "contains(${{ steps.list_instances.outputs.response }}, 'nvalid')"
-          run: echo "***Auth failed - suggestion: check your XC Bearer Token has not expired, and you are using the right token for your Tenant ***"
+          
+      - name: Check if auth worked
+        if: contains(${{ steps.list_instances.outputs.response }}, 'nvalid')
+        run: echo "***Auth failed - suggestion check your XC Bearer Token has not expired, and you are using the right token for your Tenant ***"
           
 
       - name: PATCH the instance config
