@@ -25,7 +25,6 @@ jobs:
       
       - name: debug env vars
         run: |
-          echo "XC_BEARER_TOKEN=`echo -n "${{ secrets.XC_BEARER_TOKEN }}`"
           echo "N1SC_INSTANCE ${{ vars.N1SC_INSTANCE }}"
           echo "N1SC_HOSTNAME ${{ vars.N1SC_HOSTNAME }}"
             
@@ -56,7 +55,7 @@ jobs:
       - name: check publication status1
         run: |
           curl -X GET https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}' -o response.json
-          #cat response.json | jq -c .status
+          cat response.json | jq -c .status
 
       - name: Sleep for 15 seconds
         run: sleep 15s
@@ -65,4 +64,4 @@ jobs:
       - name: check publication status2
         run: |
           curl -X GET https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}' -o response.json
-          #cat response.json | jq -c .status
+          cat response.json | jq -c .status
