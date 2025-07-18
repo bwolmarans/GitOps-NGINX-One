@@ -54,7 +54,7 @@ jobs:
       - name: Check if auth worked
         run: |
           echo "Response: ${{ steps.list_instances.outputs.response }}"
-          if: contains(${{ steps.list_instances.outputs.response }}, "nvalid")
+          if: "contains(${{ steps.list_instances.outputs.response }}, 'nvalid')"
           run: echo "***Auth failed - suggestion: check your XC Bearer Token has not expired, and you are using the right token for your Tenant ***"
           
 
