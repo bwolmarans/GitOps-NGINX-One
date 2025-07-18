@@ -48,9 +48,9 @@ jobs:
 
       - name: List instances 
         run: |
-          response = $(curl --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances')
-          echo $response
-
+          #response = $(curl --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances')
+          response = "hello"
+          echo "$response"
 
       - name: PATCH the instance config
         run: |
