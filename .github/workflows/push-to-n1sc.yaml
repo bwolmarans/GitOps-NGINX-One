@@ -46,17 +46,16 @@ jobs:
           echo "SSL_CERT=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.crt | base64 -w 0`" >> $GITHUB_ENV
           echo "SSL_KEY=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.key | base64 -w 0`" >> $GITHUB_ENV
 
-      - name: List instances
+      - name: Do some preliminary checks before proceeding
         id: list_instances
         run: |
-          response=$(curl --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances'  -H 'Authorization: Bearer APIToken fail'); echo "response=$response" >> $GITHUB_OUTPUT
+          response=$(curl --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances'  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}'); echo "response=$response" >> $GITHUB_OUTPUT
           echo "Response: ${{ steps.list_instances.outputs.response }}"
           
       - name: Check if auth worked
         if: contains(${{ steps.list_instances.outputs.response }}, 'nvalid')
         run: echo "***Auth failed - suggestion check your XC Bearer Token has not expired, and you are using the right token for your Tenant ***"; exit 1
           
-
       - name: PATCH the instance config
         run: |
           curl -X PATCH --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/config' -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}' --data '{ "aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": "${{ env.NGINX_CONF_CONFIG_FILE }}", "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": ${{ env.NGINX_CONF_CONFIG_FILE_SIZE }} } ], "name": "/etc/nginx" } ] }' -H "Content-Type: application/json" -o response.json
