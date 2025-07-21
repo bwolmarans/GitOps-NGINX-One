@@ -35,7 +35,7 @@ jobs:
           #echo "N1SC_COMMIT_HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
           echo "N1SC_COMMIT_HASH=$(git show --pretty=format:"%H %s" -s HEAD)" >> $GITHUB_ENV
           echo "N1SC_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
-
+          
       - name: Set environment variable for base64 encoded config files
         run: |
           echo "NGINX_CONF_CONFIG_FILE=`echo \# Modified by https://github.com/bwolmarans/GitOps-NGINX-One $(date) branch: ${{ env.N1SC_BRANCH }} commit hash: ${{ env.N1SC_COMMIT_HASH }} | cat - app-nyc-02/etc/nginx/nginx.conf | base64 -w 0`" >> $GITHUB_ENV
@@ -46,8 +46,7 @@ jobs:
           echo "SSL_CERT=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.crt | base64 -w 0`" >> $GITHUB_ENV
           echo "SSL_KEY=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.key | base64 -w 0`" >> $GITHUB_ENV
 
-    
-        - name: Check for "Hello" in a string
+      - name: Check for "Hello" in a string
         if: contains('Hello World', 'Hello')
         run: echo "The string contains 'Hello'!"
         
