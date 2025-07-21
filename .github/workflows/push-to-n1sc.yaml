@@ -51,19 +51,24 @@ jobs:
         run: echo "The string contains 'Hello'!"
         
       - name: Do some preliminary checks before proceeding
-        id: list_instances
+        id: ddd
         run: |
-          response=$(curl --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances'  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}'); echo "response=$response" >> $GITHUB_OUTPUT
+          my_response=$(curl --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances'  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}')
+          echo "my_response=$my_response" >> $GITHUB_OUTPUT
           echo "---------------------------------------------------------------------------------------"
           echo "---------------------------------------------------------------------------------------"
           echo "---------------------------------------------------------------------------------------"
-      
+        
       - name: blah
-        if: contains(fromJSON(${{ steps.list_instances.outputs.response }}), 'xxxxxxxxxxxxx')
+        if: contains(${{ steps.ddd.outputs.my_response }}, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
+        run: echo "The string contains 'Hello'!"
+ 
+      - name: blah
+        if: contains(fromJSON(${{ steps.ddd.outputs.my_response }}), 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
         run: echo "The string contains 'Hello'!"
 
       - name: Check if auth worked
-        if: contains(${{ steps.list_instances.outputs.response }}, 'nvalid')
+        if: contains(${{ steps.ddd.outputs.my_response }}, 'nvalid')
         run: echo "***Auth failed - suggestion check your XC Bearer Token has not expired, and you are using the right token for your Tenant ***"; exit 1
           
       - name: PATCH the instance config
