@@ -50,7 +50,7 @@ jobs:
         id: list_instances
         run: |
           response=$(curl --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances'  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}'); echo "response=$response" >> $GITHUB_OUTPUT
-          echo "Response: ${{ steps.list_instances.outputs.response }}"
+          echo "Response: $response"
           
       - name: Check if auth worked
         if: contains(${{ steps.list_instances.outputs.response }}, 'nvalid')
