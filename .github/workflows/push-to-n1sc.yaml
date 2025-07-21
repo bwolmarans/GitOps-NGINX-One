@@ -8,8 +8,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-    
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -53,6 +51,15 @@ jobs:
         run: |
           response=$(curl --location 'https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/namespaces/default/instances'  -H 'Authorization: Bearer APIToken ${{ secrets.XC_BEARER_TOKEN }}'); echo "response=$response" >> $GITHUB_OUTPUT
           echo "Response: $response"
+          echo "---------------------------------------------------------------------------------------"
+          echo "---------------------------------------------------------------------------------------"
+          echo "---------------------------------------------------------------------------------------"
+          
+          echo contains(${{ steps.list_instances.outputs.response }}, 'nvalid')
+          echo "---------------------------------------------------------------------------------------"
+          echo "---------------------------------------------------------------------------------------"
+          echo "---------------------------------------------------------------------------------------"
+          #fromJSON
           
       - name: Check if auth worked
         if: contains(${{ steps.list_instances.outputs.response }}, 'nvalid')
