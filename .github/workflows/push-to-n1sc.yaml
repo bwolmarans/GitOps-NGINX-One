@@ -59,15 +59,9 @@ jobs:
           echo "---------------------------------------------------------------------------------------"
           if: contains('Hello World', 'Hello')
           run: echo "The string contains 'Hello'!"
-          echo "---------------------------------------------------------------------------------------"
-          echo "---------------------------------------------------------------------------------------"
-          echo "---------------------------------------------------------------------------------------"
-          #if: contains(fromJSON($response), 'nvalid')
-          #run: echo "The string contains 'Hello'!"
-          echo "---------------------------------------------------------------------------------------"
-          echo "---------------------------------------------------------------------------------------"
-          echo "---------------------------------------------------------------------------------------"
-          
+          if: contains(fromJSON($response), 'nvalid')
+          run: echo "The string contains 'Hello'!"
+
       - name: Check if auth worked
         if: contains(${{ steps.list_instances.outputs.response }}, 'nvalid')
         run: echo "***Auth failed - suggestion check your XC Bearer Token has not expired, and you are using the right token for your Tenant ***"; exit 1
