@@ -59,7 +59,7 @@ jobs:
           echo "---------------------------------------------------------------------------------------"
       
       - name: blah
-        if: contains(fromJSON(${{ steps.list_instances.outputs.response }}), 'nvalid')
+        if: contains(fromJSON(${{ steps.list_instances.outputs.response }}), 'xxxxxxxxxxxxx')
         run: echo "The string contains 'Hello'!"
 
       - name: Check if auth worked
