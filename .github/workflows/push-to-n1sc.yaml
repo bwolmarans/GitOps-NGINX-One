@@ -57,10 +57,10 @@ jobs:
           echo "---------------------------------------------------------------------------------------"
           echo "---------------------------------------------------------------------------------------"
           echo "---------------------------------------------------------------------------------------"
-          if: contains('Hello World', 'Hello')
-          run: echo "The string contains 'Hello'!"
-          if: contains(fromJSON($response), 'nvalid')
-          run: echo "The string contains 'Hello'!"
+      
+      - name: blah
+        if: contains(fromJSON(${{ steps.list_instances.outputs.response }}), 'nvalid')
+        run: echo "The string contains 'Hello'!"
 
       - name: Check if auth worked
         if: contains(${{ steps.list_instances.outputs.response }}, 'nvalid')
