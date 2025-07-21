@@ -47,7 +47,7 @@ jobs:
           echo "SSL_KEY=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.key | base64 -w 0`" >> $GITHUB_ENV
 
       - name: Check for "Hello" in a string
-        if: contains('Hello World', 'Hello')
+        if: contains('Hello World', 'xxxxxxx')
         run: echo "The string contains 'Hello'!"
         
       - name: Do some preliminary checks before proceeding
