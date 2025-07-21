@@ -46,6 +46,11 @@ jobs:
           echo "SSL_CERT=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.crt | base64 -w 0`" >> $GITHUB_ENV
           echo "SSL_KEY=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.key | base64 -w 0`" >> $GITHUB_ENV
 
+    
+        - name: Check for "Hello" in a string
+        if: contains('Hello World', 'Hello')
+        run: echo "The string contains 'Hello'!"
+        
       - name: Do some preliminary checks before proceeding
         id: list_instances
         run: |
@@ -54,8 +59,12 @@ jobs:
           echo "---------------------------------------------------------------------------------------"
           echo "---------------------------------------------------------------------------------------"
           echo "---------------------------------------------------------------------------------------"
+          if: contains('Hello World', 'Hello')
+          run: echo "The string contains 'Hello'!"
           
-          echo contains($response, 'nvalid')
+          if: contains($response, 'nvalid')
+          run: echo "The string contains 'Hello'!"
+          
           echo "---------------------------------------------------------------------------------------"
           echo "---------------------------------------------------------------------------------------"
           echo "---------------------------------------------------------------------------------------"
