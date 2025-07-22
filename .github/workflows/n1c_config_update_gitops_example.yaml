@@ -10,5 +10,24 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
+        
     - name: Run Python script with arguments
       run: python your_script_args.py "Argument 1" "Another Argument"
+
+    - name: Set misc environment variables 
+      run: |
+        echo "XC_BEARER_TOKEN=`echo -n "${{ secrets.XC_BEARER_TOKEN }}`" >> $GITHUB_ENV
+        echo "N1SC_TIMESTAMP=`date -u +"%Y-%m-%dT%H:%M:%SZ"`" >> $GITHUB_ENV
+        #echo "N1SC_COMMIT_HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+        echo "N1SC_COMMIT_HASH=$(git show --pretty=format:"%H %s" -s HEAD)" >> $GITHUB_ENV
+        echo "N1SC_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+          
+    - name: Set environment variable for base64 encoded config files
+      run: |
+        echo "NGINX_CONF_CONFIG_FILE=`echo \# Modified by https://github.com/bwolmarans/GitOps-NGINX-One $(date) branch: ${{ env.N1SC_BRANCH }} commit hash: ${{ env.N1SC_COMMIT_HASH }} | cat - app-nyc-02/etc/nginx/nginx.conf | base64 -w 0`" >> $GITHUB_ENV
+        echo "NGINX_CONF_CONFIG_FILE_SIZE=`wc -c < app-nyc-02/etc/nginx/nginx.conf`" >> $GITHUB_ENV
+        echo "MIME_TYPES_CONFIG_FILE=`cat app-nyc-02/etc/nginx/mime.types | base64 -w 0`" >> $GITHUB_ENV
+        echo "DEFAULT_CONF_CONFIG_FILE=`cat app-nyc-02/etc/nginx/conf.d/default.conf | base64 -w 0`" >> $GITHUB_ENV
+        echo "DEFAULT_CONF_CONFIG_FILE_SIZE=`wc -c < app-nyc-02/etc/nginx/conf.d/default.conf`" >> $GITHUB_ENV
+        echo "SSL_CERT=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.crt | base64 -w 0`" >> $GITHUB_ENV
+        echo "SSL_KEY=`cat app-sfo-01/etc/nginx/ssl/expiring.nginx.com.key | base64 -w 0`" >> $GITHUB_ENV
