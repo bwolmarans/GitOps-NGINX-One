@@ -1,0 +1,14 @@
+name: Python Script with Command-Line Arguments
+on: [push]
+
+jobs:
+  run-python-script:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Run Python script with arguments
+      run: python your_script_args.py "Argument 1" "Another Argument"
