@@ -82,7 +82,7 @@ if __name__ == '__main__':
 
 
     headers = {
-        "Authorization": f"Bearer APIToken {xc_bearer_token}",
+        "Authorization": "Bearer APIToken " + xc_bearer_token,
         "Accept": "application/json"
     }
 
