@@ -83,7 +83,7 @@ if __name__ == '__main__':
     xxx = "Bearer APIToken " + xc_bearer_token
     print(xxx)
     yyy = xxx
-    print yyy
+    print(yyy)
     print(n1c_namespace)
     print("------------------")
 
