@@ -17,10 +17,16 @@ def n1c_list_instances(api_base_path, headers):
         response = requests.get(api_base_path + "/instances", headers=headers)
         # Check if the response was successful
         response_text = response.text
-        print("Response received:", response_text)
-        # Check if the response contains the word "xxx"
-        if "online" in response_text:
-            print("great")
+        #print("Response received:", response_text)
+        
+        if "nvalid" in response_text
+            print("Something went wrong, check your XC Bearer Token")
+            print("------------------------------------------------")
+        
+        print("Here is the response text:")
+        print(response_text)
+        print("------------------------------------------------")
+
     except requests.exceptions.RequestException as e:
         print("An error occurred:", e)
 
@@ -89,9 +95,6 @@ if __name__ == '__main__':
         "Accept": "application/json"
     }
 
-    #print(headers)
-
-    # Define the payload (data) to post
     payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": nginx_config_file, "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": nginx_config_file_size } ], "name": "/etc/nginx" } ] }
     
     api_base_path = f"https://{n1c_hostname}/api/nginx/one/namespaces/default"
