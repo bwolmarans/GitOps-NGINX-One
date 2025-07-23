@@ -45,6 +45,6 @@ jobs:
         pip install -r requirements.txt
         
     - name: Run Python script with arguments
-      run: python gitops-n1c.py --n1c_hostname=${{ vars.N1C_HOSTNAME }} --n1c_namespace=${{ vars.N1C_NAMESPACE}} --nginx_instance_id=${{ vars.N1C_INSTANCE }} --xc_bearer_token=${{ ${{ secrets.XC_BEARER_TOKEN }} --nginx_config_file=${{ env.NGINX_CONFIG_FILE }}
+      run: python gitops-n1c.py --n1c_hostname=${{ vars.N1C_HOSTNAME }} --n1c_namespace=${{ vars.N1C_NAMESPACE}} --nginx_instance_id=${{ vars.N1C_INSTANCE }} --xc_bearer_token=${{ secrets.XC_BEARER_TOKEN }} --nginx_config_file=${{ env.NGINX_CONFIG_FILE }}
       
 #/gitops-n1c.py nginx-tenant1.staging.volterra.us --xc_bearer_token=u9Uh8k+YZtikEIwMI3BzMamS3uY= --n1c_namespace=default --nginx_instance_id=inst_XZvbO_aYQm-MPmdbK2opVw
