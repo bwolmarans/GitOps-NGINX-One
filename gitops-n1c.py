@@ -80,19 +80,13 @@ if __name__ == '__main__':
     nginx_config_file = args.nginx_config_file
     nginx_config_file_size = len(nginx_config_file)
 
-    xxx = "Bearer APIToken " + xc_bearer_token
-    print(xxx)
-    yyy = xxx
-    print(yyy)
-    print(n1c_namespace)
-    print("------------------")
-
+    auth_string = "Bearer APIToken " + xc_bearer_token
     headers = {
-        "Authorization": yyy,
+        "Authorization": auth_string,
         "Accept": "application/json"
     }
 
-    print(headers)
+    #print(headers)
 
     # Define the payload (data) to post
     payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": "$nginx_config_file", "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": "$nginx_config_file_size" } ], "name": "/etc/nginx" } ] }
