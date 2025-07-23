@@ -96,8 +96,9 @@ if __name__ == '__main__':
     n1c_list_instances(api_base_path, headers)
     x = n1c_get_nginx_config(api_base_path, headers, nginx_instance_id)
     print("------------------------------------------------------------------------------------")
-    print("Current NGINX Instance Config:\n------------------------------------------------------------------------------------")
-    ", json.dumps(x, indent=2))
+    print("Current NGINX Instance Config:")
+    print("------------------------------------------------------------------------------------")
+    print(json.dumps(x, indent=2))
     print("------------------------------------------------------------------------------------")
 
     
