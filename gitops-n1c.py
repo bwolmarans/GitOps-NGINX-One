@@ -70,7 +70,7 @@ if __name__ == '__main__':
     parser.add_argument('--nginx_config_file', help='The nginx.conf, i.e. could come from the repo IaaC on push', default='xxxxxxxxxxxxxxxx')
     
     args = parser.parse_args()
-    
+
 
 
     n1c_hostname = args.n1c_hostname
@@ -85,6 +85,8 @@ if __name__ == '__main__':
         "Authorization": f"Bearer APIToken {xc_bearer_token}",
         "Accept": "application/json"
     }
+
+    print(headers)
 
     # Define the payload (data) to post
     payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": "$nginx_config_file", "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": "$nginx_config_file_size" } ], "name": "/etc/nginx" } ] }
