@@ -82,9 +82,9 @@ if __name__ == '__main__':
 
     xxx = "Bearer APIToken " + xc_bearer_token
     print(xxx)
-    
+
     headers = {
-        "Authorization": xxx,
+        "Authorization": "Bearer APIToken u9Uh8k+YZtikEIwMI3BzMamS3uY=",
         "Accept": "application/json"
     }
 
