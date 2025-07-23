@@ -110,4 +110,4 @@ if __name__ == '__main__':
 
     
     
-    #n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
+    n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
