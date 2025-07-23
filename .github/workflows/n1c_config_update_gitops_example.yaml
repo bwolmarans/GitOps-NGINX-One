@@ -39,9 +39,9 @@ jobs:
       with:
         python-version: '3.x'
 
-        
+
         
     - name: Run Python script with arguments
-      run: python ./gitops_n1c.py --n1c_hostname=${{ vars.N1SC_HOSTNAME }} --n1c_namespace=${{ vars.NAMESPACE}} --nginx-nginx_instance_id=${{ vars.N1SC_INSTANCE }} --xc_bearer_token=${{ env.XC_BEARER_TOKEN}} --nginx_config_file=${{ env.NGINX_CONF_CONFIG_FILE }}
+      run: python ../gitops_n1c.py --n1c_hostname=${{ vars.N1SC_HOSTNAME }} --n1c_namespace=${{ vars.NAMESPACE}} --nginx-nginx_instance_id=${{ vars.N1SC_INSTANCE }} --xc_bearer_token=${{ env.XC_BEARER_TOKEN}} --nginx_config_file=${{ env.NGINX_CONF_CONFIG_FILE }}
       
 #/gitops-n1c.py nginx-tenant1.staging.volterra.us --xc_bearer_token=u9Uh8k+YZtikEIwMI3BzMamS3uY= --n1c_namespace=default --nginx_instance_id=inst_XZvbO_aYQm-MPmdbK2opVw
