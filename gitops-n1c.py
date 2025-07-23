@@ -83,6 +83,7 @@ if __name__ == '__main__':
     xxx = "Bearer APIToken " + xc_bearer_token
     print(xxx)
     print(n1c_namespace)
+    print("------------------")
 
     headers = {
         "Authorization": "Bearer APIToken u9Uh8k+YZtikEIwMI3BzMamS3uY=",
