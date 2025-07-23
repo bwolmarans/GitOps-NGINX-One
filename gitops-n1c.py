@@ -82,6 +82,7 @@ if __name__ == '__main__':
 
     xxx = "Bearer APIToken " + xc_bearer_token
     print(xxx)
+    print(n1c_namespace)
 
     headers = {
         "Authorization": "Bearer APIToken u9Uh8k+YZtikEIwMI3BzMamS3uY=",
@@ -93,7 +94,7 @@ if __name__ == '__main__':
     # Define the payload (data) to post
     payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": "$nginx_config_file", "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": "$nginx_config_file_size" } ], "name": "/etc/nginx" } ] }
     
-    api_base_path = f"https://{n1c_hostname}/api/nginx/one/namespaces/{n1c_namespace}"
+    api_base_path = f"https://{n1c_hostname}/api/nginx/one/namespaces/default"
     
     n1c_list_instances(api_base_path, headers)
     x = n1c_get_nginx_config(api_base_path, headers, nginx_instance_id)
