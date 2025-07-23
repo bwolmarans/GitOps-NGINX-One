@@ -25,6 +25,9 @@ def n1c_list_instances(api_base_path, headers):
         print("An error occurred:", e)
 
 def n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload):
+    print("\n\n\n\n\n")
+    print(payload)
+    print("\n\n\n\n\n")
     try:
         response = requests.patch(api_base_path + "/instances/" + nginx_instance_id + "/config" , headers=headers, json=payload)
         # Check if the response was successful
@@ -89,7 +92,7 @@ if __name__ == '__main__':
     #print(headers)
 
     # Define the payload (data) to post
-    payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": "$nginx_config_file", "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": "$nginx_config_file_size" } ], "name": "/etc/nginx" } ] }
+    payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": nginx_config_file, "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": nginx_config_file_size } ], "name": "/etc/nginx" } ] }
     
     api_base_path = f"https://{n1c_hostname}/api/nginx/one/namespaces/default"
     
@@ -100,6 +103,11 @@ if __name__ == '__main__':
     print("------------------------------------------------------------------------------------")
     print(json.dumps(x, indent=2))
     print("------------------------------------------------------------------------------------")
+    print("PAYLOAD")
+    print("------------------------------------------------------------------------------------")
+    print(payload)
+    print("\n\n\n\n\n")
 
     
-    n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
+    
+    #n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
