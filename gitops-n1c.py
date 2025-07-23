@@ -19,7 +19,7 @@ def n1c_list_instances(api_base_path, headers):
         response_text = response.text
         #print("Response received:", response_text)
         
-        if "nvalid" in response_text
+        if "nvalid" in response_text:
             print("Something went wrong, check your XC Bearer Token")
             print("------------------------------------------------")
         
