@@ -13,8 +13,10 @@ from requests.auth import HTTPBasicAuth
 #    cat response.json | jq -c .status
 def n1c_response_error_check(response_text):
     if "credential invalid" in response_text:
-        print("ERROR: your API Authentication failed.  Check that your XC Bearer Token matches your NGINX One Console Tenant")
-        print("-------------------------------------------------------------------------------------------------------------")
+        print("ERROR: your API Authentication failed.  Check that your XC authentication token is")
+        print("       the right one for your NGINX One Console Tenant")
+        print("----------------------------------------------------------------------------------")
+        print(response_text)
         sys.exit(2) 
 
 
@@ -31,7 +33,6 @@ def n1c_list_instances(api_base_path, headers):
         print("An error occurred:", e)
 
 def n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload):
-
     try:
         response = requests.patch(api_base_path + "/instances/" + nginx_instance_id + "/config" , headers=headers, json=payload)
         # Check if the response was successful
@@ -44,7 +45,7 @@ def n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload):
             #   print("great")
 
         else:
-            print(f"Failed to Patch message. HTTP Status Code: {response.status_code}")
+            print(f"Something unexpected happened. The patch has probably failed. HTTP Status Code: {response.status_code}")
             print("Response:", response.text)
 
     except requests.exceptions.RequestException as e:
