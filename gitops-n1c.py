@@ -80,9 +80,11 @@ if __name__ == '__main__':
     nginx_config_file = args.nginx_config_file
     nginx_config_file_size = len(nginx_config_file)
 
-
+    xxx = "Bearer APIToken " + xc_bearer_token
+    print(xxx)
+    
     headers = {
-        "Authorization": "Bearer APIToken " + xc_bearer_token,
+        "Authorization": xxx,
         "Accept": "application/json"
     }
 
