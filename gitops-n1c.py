@@ -11,6 +11,12 @@ from requests.auth import HTTPBasicAuth
 #run: |
 #    curl -X GET https://${{ vars.N1SC_HOSTNAME }}/api/nginx/one/n1c_namespaces/default/instances/${{ vars.N1SC_INSTANCE }}/publications/${{ env.PUBLICATION_ID }}  -H 'Authorization: Bearer APIToken ${{ secrets.xc_bearer_token }}' -o response.json
 #    cat response.json | jq -c .status
+def n1c_response_error_check(response_text):
+    if "credential invalid" in response_text:
+        print("ERROR: your API Authentication failed.  Check that your XC Bearer Token matches your NGINX One Console Tenant")
+        print("-------------------------------------------------------------------------------------------------------------")
+        sys.exit(2) 
+
 
 def n1c_list_instances(api_base_path, headers):
     try:
@@ -18,31 +24,25 @@ def n1c_list_instances(api_base_path, headers):
         # Check if the response was successful
         response_text = response.text
         #print("Response received:", response_text)
-        
-        if "nvalid" in response_text:
-            print("Something went wrong, check your XC Bearer Token")
-            print("------------------------------------------------")
-        
-        print("Here is the response text:")
+        n1c_response_error_check(response_text)
         print(response_text)
-        print("------------------------------------------------")
 
     except requests.exceptions.RequestException as e:
         print("An error occurred:", e)
 
 def n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload):
-    print("\n\n\n\n\n")
-    print(payload)
-    print("\n\n\n\n\n")
+
     try:
         response = requests.patch(api_base_path + "/instances/" + nginx_instance_id + "/config" , headers=headers, json=payload)
         # Check if the response was successful
-        if response.status_code == 200:
+        if response.status_code >= 200 and response.status_code < 300:
             response_text = response.text
+            n1c_response_error_check(response_text)
             print("Response received:", response_text)
             # Check if the response contains the word "xxx"
-            if "online" in response_text:
-                print("great")
+            #if "online" in response_text:
+            #   print("great")
+
         else:
             print(f"Failed to Patch message. HTTP Status Code: {response.status_code}")
             print("Response:", response.text)
@@ -53,19 +53,11 @@ def n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload):
 def n1c_get_nginx_config(api_base_path, headers, nginx_instance_id):
     try:
         response = requests.get(api_base_path + "/instances/" + nginx_instance_id + "/config" , headers=headers)
-        # Check if the response was successful
-        if response.status_code == 200:
-            response_text = response.text
-            print("Response received:", response_text)
-            # Check if the response contains the word "xxx"
-            if "online" in response_text:
-                print("great")
-            return response.text
-        else:
-            print(f"Failed. HTTP Status Code: {response.status_code}")
-            print("Response:", response.text)
-            return response.text
-        
+        response_text = response.text
+        n1c_response_error_check(response_text)
+        print("Response received:", response_text)
+        return response.text
+       
     except requests.exceptions.RequestException as e:
         print("An error occurred:", e)
 
@@ -106,11 +98,6 @@ if __name__ == '__main__':
     print("------------------------------------------------------------------------------------")
     print(json.dumps(x, indent=2))
     print("------------------------------------------------------------------------------------")
-    print("PAYLOAD")
-    print("------------------------------------------------------------------------------------")
-    print(payload)
-    print("\n\n\n\n\n")
-
     
     
     n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
