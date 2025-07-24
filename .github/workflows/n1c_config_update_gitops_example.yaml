@@ -37,5 +37,5 @@ jobs:
         
     - name: Run the n1c Python script
       run: |
-        python nginx_one_console_python_api_example.py --n1c_tenant_fqdn=${{ vars.N1C_TENANT_FQDN }} --n1c_namespace=${{ vars.N1C_NAMESPACE}} --nginx_instance_hostname=${{ vars.NGINX_INSTANCE_HOSTNAME}} --nginx_instance_id=${{ vars.NGINX_INSTANCE_ID }} --xc_api_token=${{ secrets.XC_API_TOKEN }} --nginx_config_file=${{ env.NGINX_CONFIG_FILE }}
+        python nginx_one_console_api_python_example.py --n1c_tenant_fqdn=${{ vars.N1C_TENANT_FQDN }} --n1c_namespace=${{ vars.N1C_NAMESPACE}} --nginx_instance_hostname=${{ vars.NGINX_INSTANCE_HOSTNAME}} --nginx_instance_id=${{ vars.NGINX_INSTANCE_ID }} --xc_api_token=${{ secrets.XC_API_TOKEN }} --nginx_config_file=${{ env.NGINX_CONFIG_FILE }}
       
