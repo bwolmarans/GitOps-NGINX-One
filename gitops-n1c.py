@@ -39,7 +39,7 @@ def n1c_find_instance_by_hostname(nginx_instance_list, nginx_instance_hostname):
         instances = json.loads(nginx_instance_list)
         for instance in instances['items']:
             if instance['hostname'] == nginx_instance_hostname:
-                return instance['uid']
+                return instance['object_id']
         print(f"Instance with hostname {nginx_instance_hostname} not found.")
         sys.exit(1)
     except json.JSONDecodeError as e:
