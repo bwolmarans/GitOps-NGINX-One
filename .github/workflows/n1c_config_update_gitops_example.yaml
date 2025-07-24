@@ -1,21 +1,17 @@
 name: NGINX One Console Workflow Example
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-
-# Triggers the workflow on push or pull request events but only for the "main" branch
+# Triggers the workflow on push request events but only for the "main" branch
 on:
   push:
     branches:
       - main
-    concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
-    
-  # Allows you to run this workflow manually from the Actions tab
-  #workflow_dispatch:
+
+concurrency:
+group: ${{ github.workflow }}-${{ github.ref }}
+cancel-in-progress: true
+
+# Allows you to run this workflow manually from the Actions tab
+#workflow_dispatch:
 
 
 
@@ -23,6 +19,9 @@ jobs:
 
   run-n1c-python-example-script:
     runs-on: ubuntu-latest
+    concurrency:
+      group: example-group
+      cancel-in-progress: true
     steps:
     - uses: actions/checkout@v4
     - name: Checkout and set misc environment variables 
