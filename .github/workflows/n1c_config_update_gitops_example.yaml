@@ -2,10 +2,7 @@ name: NGINX One Console Workflow Example
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches:
-      - "**"
-    tags-ignore:
-      - "**"
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,8 +19,9 @@ jobs:
           skip_after_successful_duplicate: 'true'
 
   run-n1c-python-example-script:
-    needs: pre_job
+    needs: workaround_github_duplicate_actions_bug
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
