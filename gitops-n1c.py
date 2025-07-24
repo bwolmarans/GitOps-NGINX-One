@@ -102,7 +102,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
 
-    n1c_hostname = args.n1c_hostname
+    n1c_tenant_fqdn = args.n1c_tenant_fqdn
     n1c_namespace = args.n1c_namespace
     nginx_instance_id = args.nginx_instance_id
     xc_api_token = args.xc_api_token
@@ -117,11 +117,11 @@ if __name__ == '__main__':
         "Content-Type": "application/json"
     }
 
-    api_base_path = f"https://{n1c_hostname}/api/nginx/one/namespaces/{n1c_namespace}"
+    api_base_path = f"https://{n1c_tenant_fqdn}/api/nginx/one/namespaces/{n1c_namespace}"
     
     nginx_instance_list = n1c_list_instances(api_base_path, headers)
     nginx_instance_id = n1c_find_instance_by_hostname(nginx_instance_list, nginx_instance_hostname)
-    
+
     
     # Uncomment this block to see the current NGINX instance config
     #x = n1c_get_nginx_config(api_base_path, headers, nginx_instance_id)
