@@ -146,7 +146,7 @@ if __name__ == '__main__':
     for x in range(6):
         sleep (5)  
         status = n1c_check_publication_status(api_base_path, headers, nginx_instance_id, publication_id)
-        print("publication status for publication ID " + publication_id + " is " + status)
+        print("publication status for publication ID " + publication_id + " is: \n " + status + "\n")
         if status == "succeeded":
             print("NGINX configuration for NGINX Instance " + nginx_instance_hostname + " successfully updated.")
             break
