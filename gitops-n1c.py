@@ -86,8 +86,9 @@ def n1c_check_publication_status(api_base_path, headers, nginx_instance_id, publ
             if data['status'] == "succeeded":
                 return "succeeded"
             elif data['status'] == "failed":
-                return "failed for the reason: " + data['status_cause']['message']
-            elif data['status'] == "pending":
+                x = "failed for the reason: " + data['status_cause']['message']
+                return x
+            elif data['status'] == "pending": 
                 return "pending"
         else:
             print(f"Something unexpected happened. HTTP Status Code: {response.status_code}")
