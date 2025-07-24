@@ -136,7 +136,8 @@ if __name__ == '__main__':
     
     payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": nginx_config_file, "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": nginx_config_file_size } ], "name": "/etc/nginx" } ] }
     
-    print("Attempting to patch nginx.conf on NGINX Instance Hostname " + nginx_instance_hostname + " which is NGINX Instance ID " + nginx_instance_id)publication_id = n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
+    print("Attempting to patch nginx.conf on NGINX Instance Hostname " + nginx_instance_hostname + " which is NGINX Instance ID " + nginx_instance_id)
+    publication_id = n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
     
     # Wait for the publication to be processed
     for x in range(6):
