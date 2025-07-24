@@ -77,7 +77,7 @@ if __name__ == '__main__':
     n1c_hostname = args.n1c_hostname
     n1c_namespace = args.n1c_namespace
     nginx_instance_id = args.nginx_instance_id
-    xc_api_token = args.xc_bearer_token
+    xc_api_token = args.xc_api_token
     nginx_config_file = args.nginx_config_file
     nginx_config_file_size = len(nginx_config_file)
 
