@@ -83,7 +83,12 @@ def n1c_check_publication_status(api_base_path, headers, nginx_instance_id, publ
             response_text = response.text
             n1c_response_error_check(response_text)
             data = json.loads(response_text)
-            return data['status']
+            if data['status'] == "succeeded":
+                return "succeeded"
+            elif data['status'] == "failed":
+                return "failed for the reason: " + data['status_cause']['message']
+            elif data['status'] == "pending":
+                return "pending"
         else:
             print(f"Something unexpected happened. HTTP Status Code: {response.status_code}")
             print("Response:", response.text)
@@ -149,5 +154,4 @@ if __name__ == '__main__':
             break
 
     if status != "succeeded":
-        print("NGINX configuration update failed. Please check the reason code.")
         sys.exit(1)    
