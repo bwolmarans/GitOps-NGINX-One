@@ -3,9 +3,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ] 
-    concurrency: 
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -13,6 +10,9 @@ on:
 
 jobs:
   run-n1c-python-example-script:
+    concurrency:
+      group: ${{ github.head_ref }}-init
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
