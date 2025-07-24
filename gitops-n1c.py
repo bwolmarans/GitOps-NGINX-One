@@ -81,7 +81,7 @@ if __name__ == '__main__':
     nginx_config_file = args.nginx_config_file
     nginx_config_file_size = len(nginx_config_file)
 
-    auth_string = " APIToken " + xc_api_token
+    auth_string = "APIToken " + xc_api_token
     headers = {
         "Authorization": auth_string,
         "Accept": "application/json",
