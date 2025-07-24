@@ -9,10 +9,19 @@ on:
 
 
 jobs:
+  workaround_github_duplicate_actions_bug:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v3.4.0
+        with:
+          skip_after_successful_duplicate: 'true'
+
   run-n1c-python-example-script:
-    concurrency:
-      group: ${{ github.head_ref }}-init
-      cancel-in-progress: true
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
