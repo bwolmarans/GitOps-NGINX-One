@@ -49,7 +49,7 @@ jobs:
       continue-on-error: true # Allow workflow to continue on error
 
     - name: Check captured exit code
-      if: steps.run_script.outputs.exitcode == '1' e
+      if: steps.run_script.outputs.exitcode == '1' 
       run: echo echo "::error title=Error::A general error"
 
 
