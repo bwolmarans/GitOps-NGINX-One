@@ -97,7 +97,7 @@ if __name__ == '__main__':
     parser.add_argument('--nginx_instance_id', help='The nginx instance uid from NGINX One Console', default='your NGINX instance ID here')
     parser.add_argument('--xc_api_token', help='The F5 Distribted Cloud API Token', default='your XC API Token here')
     parser.add_argument('--nginx_config_file', help='The /etc/nginx/nginx.conf file, base64d', default='your base64d nginx config here')  
-    parser.add_argument('--nginx_instance_hostname', help='The hostname of the NGINX instance', default='your NGINX instance hostname here')
+    parser.add_argument('--nginx_instance_hostname', help='The hostname of the NGINX instance', default='nothing here, use the instance id')
     
     args = parser.parse_args()
 
@@ -119,9 +119,9 @@ if __name__ == '__main__':
 
     api_base_path = f"https://{n1c_tenant_fqdn}/api/nginx/one/namespaces/{n1c_namespace}"
     
-    nginx_instance_list = n1c_list_instances(api_base_path, headers)
-    nginx_instance_id = n1c_find_instance_by_hostname(nginx_instance_list, nginx_instance_hostname)
-
+    if nginx_instance_hostname != "nothing here, use the instance id":
+        nginx_instance_list = n1c_list_instances(api_base_path, headers)
+        nginx_instance_id = n1c_find_instance_by_hostname(nginx_instance_list, nginx_instance_hostname)
     
     # Uncomment this block to see the current NGINX instance config
     #x = n1c_get_nginx_config(api_base_path, headers, nginx_instance_id)
