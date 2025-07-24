@@ -6,13 +6,8 @@ on:
     branches:
       - main
 
-concurrency:
-group: ${{ github.workflow }}-${{ github.ref }}
-cancel-in-progress: true
-
 # Allows you to run this workflow manually from the Actions tab
 #workflow_dispatch:
-
 
 
 jobs:
@@ -20,8 +15,9 @@ jobs:
   run-n1c-python-example-script:
     runs-on: ubuntu-latest
     concurrency:
-      group: example-group
+      group: staging_environment
       cancel-in-progress: true
+
     steps:
     - uses: actions/checkout@v4
     - name: Checkout and set misc environment variables 
