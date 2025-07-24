@@ -104,9 +104,14 @@ if __name__ == '__main__':
     
     
     publication_id = n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
-    for x in range(3):
+    for x in range(6):
         sleep (5)  # Wait for the publication to be processed
         status = n1c_check_publication_status(api_base_path, headers, nginx_instance_id, publication_id)
         print("publication status for publication ID " + publication_id + " is " + status)
+        if status == "succeeded":
+            print("NGINX configuration successfully updated.")
+            break
 
-    
+    if status != "succeeded":
+        print("NGINX configuration update failed. Please check the reason code.")
+        sys.exit(1)    
