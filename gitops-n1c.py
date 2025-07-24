@@ -27,7 +27,7 @@ def n1c_list_instances(api_base_path, headers):
         response_text = response.text
         #print("Response received:", response_text)
         n1c_response_error_check(response_text)
-        print(response_text)
+        return response_text
 
     except requests.exceptions.RequestException as e:
         print("An error occurred:", e)
@@ -43,7 +43,6 @@ def n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload):
             # Check if the response contains the word "xxx"
             #if "online" in response_text:
             #   print("great")
-
         else:
             print(f"Something unexpected happened. The patch has probably failed. HTTP Status Code: {response.status_code}")
             print("Response:", response.text)
@@ -56,9 +55,7 @@ def n1c_get_nginx_config(api_base_path, headers, nginx_instance_id):
         response = requests.get(api_base_path + "/instances/" + nginx_instance_id + "/config" , headers=headers)
         response_text = response.text
         n1c_response_error_check(response_text)
-        print("Response received:", response_text)
         return response.text
-       
     except requests.exceptions.RequestException as e:
         print("An error occurred:", e)
 
@@ -85,20 +82,23 @@ if __name__ == '__main__':
     auth_string = "Bearer APIToken " + xc_bearer_token
     headers = {
         "Authorization": auth_string,
-        "Accept": "application/json"
+        "Accept": "application/json",
+        "Content-Type": "application/json"
     }
 
-    payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": nginx_config_file, "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": nginx_config_file_size } ], "name": "/etc/nginx" } ] }
+    api_base_path = f"https://{n1c_hostname}/api/nginx/one/namespaces/{n1c_namespace}"
     
-    api_base_path = f"https://{n1c_hostname}/api/nginx/one/namespaces/default"
+    nginx_instance_list = n1c_list_instances(api_base_path, headers)
     
-    n1c_list_instances(api_base_path, headers)
-    x = n1c_get_nginx_config(api_base_path, headers, nginx_instance_id)
-    print("------------------------------------------------------------------------------------")
-    print("Current NGINX Instance Config:")
-    print("------------------------------------------------------------------------------------")
-    print(json.dumps(x, indent=2))
-    print("------------------------------------------------------------------------------------")
+    # Uncomment this block to see the current NGINX instance config
+    #x = n1c_get_nginx_config(api_base_path, headers, nginx_instance_id)
+    #print("------------------------------------------------------------------------------------")
+    #print("Current NGINX Instance Config:")
+    #print("------------------------------------------------------------------------------------")
+    #print(json.dumps(x, indent=2))
+    #print("------------------------------------------------------------------------------------")
+    
+    etc_nginx_nginx_dot_conf_payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": nginx_config_file, "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": nginx_config_file_size } ], "name": "/etc/nginx" } ] }
     
     
-    n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
+    n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, etc_nginx_nginx_dot_conf_payload)
