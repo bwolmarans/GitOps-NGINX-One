@@ -11,7 +11,7 @@ on:
 
 
 jobs:
-  run-n1c-python-script:
+  run-n1c-python-example-script:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
