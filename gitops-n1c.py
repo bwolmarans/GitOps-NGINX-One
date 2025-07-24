@@ -92,7 +92,7 @@ def n1c_check_publication_status(api_base_path, headers, nginx_instance_id, publ
         print("An error occurred:", e)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='GitOps for NGINX One Console')
-    parser.add_argument('--n1c_hostname', help='The F5 Distribted Cloud Tenant FQDN', default='nginx-tenant1.staging.volterra.us')
+    parser.add_argument('--n1c_tenant_fqdn', help='The F5 Distribted Cloud Tenant FQDN', default='nginx-tenant1.staging.volterra.us')
     parser.add_argument('--n1c_namespace', help="The F5 Distribted Cloud n1c_namespace within your tenant", default='default')
     parser.add_argument('--nginx_instance_id', help='The nginx instance uid from NGINX One Console', default='your NGINX instance ID here')
     parser.add_argument('--xc_api_token', help='The F5 Distribted Cloud API Token', default='your XC API Token here')
