@@ -6,14 +6,12 @@
 This repository provides a sample Github Actions script that allows NGINX One users to manage versioning and deployment of NGINX configurations via Github actions.
 
 ## TLDR;
-1. Set your F5 Distributed Cloud bearer token in the Actions secrets
-2. Using NGINX One Cloud Console, note your instance_id in the details, and note the first few lines of the nginx.conf file.
-3. Set your N1SC_INSTANCE in the Actions Variables to be your instance_id, for example inst_23xYZTyZSpqa5UNi-eFcyw
-4. Set your N1SC_HOSTNAME the Actions variables, for example nginxone-team.staging.volterra.us 
-6. In this repo, edit app-nyc-01/etc/nginx/nginx.conf and add a comment near the top, and commit. 
+1. Set your F5 Distributed Cloud API token in the Actions secrets as XC_API_TOKEN
+2. Using NGINX One Cloud Console, note your NGINX instance hostname
+3. Set your N1C_TENANT_FQDN, NGINX_INSTANCE_HOSTNAME, and your N1C_NAMESPACE in the Actions variables, for example nginxone-team.staging.volterra.us as the tenant fqdn.
+6. Clone the repo, and make a change to app-nyc-02/etc/nginx/nginx.conf and add a comment near the top, and commit. 
 7. That will trigger the actions workflow, you can go and view this running under Actions
-8. Repeat step 2, and note the comment at the top of the file indicating the nginx.conf file has been updated by this project.
-   
+  
 
 ## NGINX Configurations
 Configuration files are stored for each instance in this repository file structure.  See ```app-nyc-01``` for sample NGINX configurations found in nginx.conf
