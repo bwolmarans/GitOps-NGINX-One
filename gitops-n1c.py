@@ -1,3 +1,10 @@
+# NGINX One Console API Example
+# -----------------------------
+# This script demonstrates how to interact with the NGINX One Console API to update the NGINX configuration.
+# It includes functions to list instances, patch the NGINX configuration, get the current configuration,
+# and check the status of a publication.    
+# This script is intended to be run in a GitOps context, where it can be triggered by changes in a Git repository.
+
 import requests
 import argparse
 import json

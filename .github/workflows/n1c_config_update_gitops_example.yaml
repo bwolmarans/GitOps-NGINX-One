@@ -1,4 +1,4 @@
-name: Python Script with Command-Line Arguments
+name: NGINX One Console Workflow Example
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
@@ -24,7 +24,6 @@ jobs:
       run: |
         echo "NGINX_CONFIG_FILE=`echo \# Modified by https://github.com/bwolmarans/GitOps-NGINX-One $(date) branch: ${{ env.MY_BRANCH }} commit hash: ${{ env.MY_COMMIT_HASH }} | cat - app-nyc-02/etc/nginx/nginx.conf | base64 -w 0`" >> $GITHUB_ENV
         echo "MIME_TYPES_CONFIG_FILE=`cat app-nyc-02/etc/nginx/mime.types | base64 -w 0`" >> $GITHUB_ENV
-        
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -40,4 +39,3 @@ jobs:
       run: |
         python gitops-n1c.py --n1c_hostname=${{ vars.N1C_HOSTNAME }} --n1c_namespace=${{ vars.N1C_NAMESPACE}} --nginx_instance_id=${{ vars.N1C_INSTANCE }} --xc_api_token=${{ secrets.XC_API_TOKEN }} --nginx_config_file=${{ env.NGINX_CONFIG_FILE }}
       
-#/gitops-n1c.py nginx-tenant1.staging.volterra.us --xc_bearer_token=u9Uh8k+YZtikEIwMI3BzMamS3uY= --n1c_namespace=default --nginx_instance_id=inst_XZvbO_aYQm-MPmdbK2opVw
