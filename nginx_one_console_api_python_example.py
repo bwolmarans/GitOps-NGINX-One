@@ -39,7 +39,7 @@ def n1c_find_instance_by_hostname(nginx_instance_list, nginx_instance_hostname):
             if instance['hostname'] == nginx_instance_hostname:
                 return instance['object_id']
         print(f"Instance with hostname {nginx_instance_hostname} not found.")
-        sys.exit(1)
+        sys.exit(3)
     except json.JSONDecodeError as e:
         print("Error decoding JSON response:", e)
         sys.exit(1)
@@ -151,5 +151,5 @@ if __name__ == '__main__':
             print("NGINX configuration for NGINX Instance " + nginx_instance_hostname + " successfully updated.")
             break
         elif "failed" in status:
-            sys.exit(1)
+            sys.exit(2)
             
