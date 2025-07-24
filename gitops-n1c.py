@@ -104,9 +104,9 @@ if __name__ == '__main__':
     
     
     publication_id = n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
-    sleep (5)  # Wait for the publication to be processed
-    print("Checking publication status for publication ID:", publication_id)
-    status = n1c_check_publication_status(api_base_path, headers, nginx_instance_id, publication_id)
-    print(status)
+    for x in range(3):
+        sleep (5)  # Wait for the publication to be processed
+        status = n1c_check_publication_status(api_base_path, headers, nginx_instance_id, publication_id)
+        print("publication status for publication ID " + publication_id + " is " + status)
 
     
