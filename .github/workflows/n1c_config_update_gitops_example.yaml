@@ -11,16 +11,16 @@ on:
 
 
 jobs:
-  run-python-script:
+  run-n1c-python-script:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Set misc environment variables 
+    - name: Checkout and set misc environment variables 
       run: |
         echo "MY_COMMIT_HASH=$(git show --pretty=format:"%H %s" -s HEAD)" >> $GITHUB_ENV
         echo "MY_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
           
-    - name: Set environment variable for base64 encoded config files
+    - name: Set environment variables for base64 encoded config files
       run: |
         echo "NGINX_CONFIG_FILE=`echo \# Modified by https://github.com/bwolmarans/GitOps-NGINX-One $(date) branch: ${{ env.MY_BRANCH }} commit hash: ${{ env.MY_COMMIT_HASH }} | cat - app-nyc-02/etc/nginx/nginx.conf | base64 -w 0`" >> $GITHUB_ENV
         echo "MIME_TYPES_CONFIG_FILE=`cat app-nyc-02/etc/nginx/mime.types | base64 -w 0`" >> $GITHUB_ENV

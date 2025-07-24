@@ -120,8 +120,11 @@ if __name__ == '__main__':
     api_base_path = f"https://{n1c_tenant_fqdn}/api/nginx/one/namespaces/{n1c_namespace}"
     
     if nginx_instance_hostname != "nothing here, use the instance id":
+        print("NGINX Instance Hostname " + nginx_instance_hostname + " provided, using this as a key to find the NGINX Instance ID")
         nginx_instance_list = n1c_list_instances(api_base_path, headers)
         nginx_instance_id = n1c_find_instance_by_hostname(nginx_instance_list, nginx_instance_hostname)
+    else:
+        print("No NGINX Instance Hostname, attemping to use NGINX Instance ID instead: " + nginx_instance_id)
     
     # Uncomment this block to see the current NGINX instance config
     #x = n1c_get_nginx_config(api_base_path, headers, nginx_instance_id)
@@ -133,14 +136,15 @@ if __name__ == '__main__':
     
     payload = {"aux": [], "conf_path": "/etc/nginx/nginx.conf", "configs": [ { "files": [ { "contents": nginx_config_file, "mtime": "1970-01-01T00:00:00Z", "name": "nginx.conf", "size": nginx_config_file_size } ], "name": "/etc/nginx" } ] }
     
+    print("Attempting to patch nginx.conf on NGINX Instance Hostname " + nginx_instance_hostname + " which is NGINX Instance ID " + nginx_instance_id)publication_id = n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
     
-    publication_id = n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload)
+    # Wait for the publication to be processed
     for x in range(6):
-        sleep (5)  # Wait for the publication to be processed
+        sleep (5)  
         status = n1c_check_publication_status(api_base_path, headers, nginx_instance_id, publication_id)
         print("publication status for publication ID " + publication_id + " is " + status)
         if status == "succeeded":
-            print("NGINX configuration successfully updated.")
+            print("NGINX configuration for NGINX Instance " + nginx_instance_hostname + " successfully updated.")
             break
 
     if status != "succeeded":
