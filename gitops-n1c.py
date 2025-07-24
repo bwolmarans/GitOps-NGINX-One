@@ -4,6 +4,11 @@
 # It includes functions to list instances, patch the NGINX configuration, get the current configuration,
 # and check the status of a publication.    
 # This script is intended to be run in a GitOps context, where it can be triggered by changes in a Git repository.
+# This is only intended to patch /etc/nginx/nginx.conf, but can be extended to patch other files.
+# This uses command line parameters to pass in the NGINX One Console hostname, namespace, instance ID, API token, and the base64 encoded NGINX configuration file.
+
+
+
 
 import requests
 import argparse
@@ -28,6 +33,21 @@ def n1c_list_instances(api_base_path, headers):
         return response_text
     except requests.exceptions.RequestException as e:
         print("An error occurred:", e)
+
+def n1c_find_instance_by_hostname(nginx_instance_list, nginx_instance_hostname):
+    try:
+        instances = json.loads(nginx_instance_list)
+        for instance in instances['items']:
+            if instance['hostname'] == nginx_instance_hostname:
+                return instance['uid']
+        print(f"Instance with hostname {nginx_instance_hostname} not found.")
+        sys.exit(1)
+    except json.JSONDecodeError as e:
+        print("Error decoding JSON response:", e)
+        sys.exit(1)
+    except KeyError as e:
+        print("Key error:", e)
+        sys.exit(1)
 
 def n1c_patch_nginx_config(api_base_path, headers, nginx_instance_id, payload):
     try:
@@ -74,9 +94,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='GitOps for NGINX One Console')
     parser.add_argument('--n1c_hostname', help='The F5 Distribted Cloud Tenant FQDN', default='nginx-tenant1.staging.volterra.us')
     parser.add_argument('--n1c_namespace', help="The F5 Distribted Cloud n1c_namespace within your tenant", default='default')
-    parser.add_argument('--nginx_instance_id', help='The nginx instance uid from NGINX One Console', default='xxxxxxxxxxxxx')
-    parser.add_argument('--xc_api_token', help='The F5 Distribted Cloud API Token', default='xxxxxxxxxxxxxxxx')
-    parser.add_argument('--nginx_config_file', help='The nginx.conf, i.e. could come from the repo IaaC on push', default='xxxxxxxxxxxxxxxx')
+    parser.add_argument('--nginx_instance_id', help='The nginx instance uid from NGINX One Console', default='your NGINX instance ID here')
+    parser.add_argument('--xc_api_token', help='The F5 Distribted Cloud API Token', default='your XC API Token here')
+    parser.add_argument('--nginx_config_file', help='The /etc/nginx/nginx.conf file, base64d', default='your base64d nginx config here')  
+    parser.add_argument('--nginx_instance_hostname', help='The hostname of the NGINX instance', default='your NGINX instance hostname here')
     
     args = parser.parse_args()
 
@@ -87,6 +108,7 @@ if __name__ == '__main__':
     xc_api_token = args.xc_api_token
     nginx_config_file = args.nginx_config_file
     nginx_config_file_size = len(nginx_config_file)
+    nginx_instance_hostname = args.nginx_instance_hostname
 
     auth_string = "APIToken " + xc_api_token
     headers = {
@@ -98,6 +120,8 @@ if __name__ == '__main__':
     api_base_path = f"https://{n1c_hostname}/api/nginx/one/namespaces/{n1c_namespace}"
     
     nginx_instance_list = n1c_list_instances(api_base_path, headers)
+    nginx_instance_id = n1c_find_instance_by_hostname(nginx_instance_list, nginx_instance_hostname)
+    
     
     # Uncomment this block to see the current NGINX instance config
     #x = n1c_get_nginx_config(api_base_path, headers, nginx_instance_id)
