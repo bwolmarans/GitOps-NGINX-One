@@ -45,20 +45,5 @@ jobs:
     - name: Run the n1c Python script
       run: |
         python nginx_one_console_api_python_example.py --n1c_tenant_fqdn=${{ vars.N1C_TENANT_FQDN }} --n1c_namespace=${{ vars.N1C_NAMESPACE}} --nginx_instance_hostname=${{ vars.NGINX_INSTANCE_HOSTNAME}} --nginx_instance_id=${{ vars.NGINX_INSTANCE_ID }} --xc_api_token=${{ secrets.XC_API_TOKEN }} --nginx_config_file=${{ env.NGINX_CONFIG_FILE }}
-        echo "exitcode=$?" >> $GITHUB_OUTPUT
-      continue-on-error: true # Allow workflow to continue on error
-
-    - name: Check captured exit code
-      if: steps.run_script.outputs.exitcode == '1' 
-      run: echo echo "::error title=Error::A general error"
-
-
-    - name: Check captured exit code
-      if: steps.run_script.outputs.exitcode == '2' 
-      run: echo echo "::error title=Error::Publication failed. Check the output of PYthon job for details."
-
-    - name: Check captured exit code
-      if: steps.run_script.outputs.exitcode == '3' 
-      run: echo echo "::error title=Error::NGINX Instance ID not found from hostname"
 
 
