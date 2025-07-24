@@ -150,6 +150,7 @@ if __name__ == '__main__':
         if status == "succeeded":
             print("NGINX configuration for NGINX Instance " + nginx_instance_hostname + " successfully updated.")
             break
-
-    if status != "succeeded":
-        sys.exit(1)    
+        elif "failed" in status:
+            print("NGINX configuration updated for instance " + nginx_instance_hostname + " has failed to update.\n  Error: " + status)
+            sys.exit(1)
+            
