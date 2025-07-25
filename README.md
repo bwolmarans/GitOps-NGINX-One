@@ -2,8 +2,21 @@
 [![Community Support](https://badgen.net/badge/support/community/cyan?icon=awesome)](https://github.com/nginxinc/mtbChef/GitOps-NMS/blob/main/SUPPORT.md)
 <!-- [![Commercial Support](https://badgen.net/badge/support/commercial/cyan?icon=awesome)](<Insert URL>) -->
 
-# Demo: Managing NGINX with NGINX One using GitOps
-This repository provides a sample Github Actions script that allows NGINX One users to manage versioning and deployment of NGINX configurations via Github actions.
+# Demo: Example of using the NGINX One Console REST API using a simple Python script driven by GitOps
+This repository provides an example in Python of using the NGINX One Console API. There is a Github Actions script that pulls parameteres from this repository, including an nginx.conf config file, and passes those to the Python script, but the Python script is not tightly coupled to this and the Python script has no depdency on Github Actions and therefore can be taken and run outside of Github.
+
+## Python Script
+
+The Python script is named nginx_one_console_api_python_example.py and expects some command-line parameters passed in such as namespace, tenant, and a few more.
+It can be run outside of this repository.
+Use -h or --help to see the usage.
+The python script does the following:
+
+- Accepts the parameters
+- Locates the nginx instance ID based on the nginx instance hostname provided by doing an API call to the NGINX One Console to get a list of all instances, finding the hostname, and matching that to the instance ID
+- Does a patch using nginx.conf which is passed in base64'd as a parameter
+- Checks for success of the publication
+
 
 ## TLDR;
 1. Set your F5 Distributed Cloud API token in the Actions secrets as XC_API_TOKEN
@@ -14,16 +27,17 @@ This repository provides a sample Github Actions script that allows NGINX One us
   
 
 ## NGINX Configurations
-Configuration files are stored for each instance in this repository file structure.  See ```app-nyc-01``` for sample NGINX configurations found in nginx.conf
+Configuration files are stored for each instance in this repository file structure.  See ```app-nyc-02``` for sample NGINX configurations found in nginx.conf
 
 ## Github Actions
-The repository is configured to run the ```GitOps-NMS/.github/workflows/push-to-n1sc.yml``` Github Action on any commit and pull-request merge to the main branch. The script works by:
+The repository is configured to run the ```GitOps-NMS/.github/workflows/n1c_config_update_gitops_example.yml``` Github Action on push to the main branch. The script works by:
 
 - Defining configuration files for a given instance in the repository
 - Encoding configuration files to base64
 - Pulling values from repository configuration variables (see table below)
 - Generating a timestamp
-- Incorporating all of these elements and sending an API call to the NGINX Management Suite instance accessible via the internet
+- Incorporating all of these elements and sending these as parameters to the Python script
+
 
 ## License
 
