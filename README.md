@@ -5,6 +5,9 @@
 # Example of using the NGINX One Console REST API 
 This repository provides an example in Python of using the NGINX One Console API. There is a Github Actions script that pulls parameteres from this repository, including an nginx.conf config file, and passes those to the Python script, but the Python script is not tightly coupled to this and the Python script has no dependency on Github Actions and therefore can be taken and run outside of Github.
 
+## TLDR GIF
+![TLDR GIF](./nginx_one_console_api_example.gif)
+
 ## Python Script
 
 The Python script is named nginx_one_console_api_python_example.py and expects some command-line parameters passed in such as namespace, tenant, and a few more.
