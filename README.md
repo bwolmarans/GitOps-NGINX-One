@@ -2,7 +2,7 @@
 [![Community Support](https://badgen.net/badge/support/community/cyan?icon=awesome)](https://github.com/nginxinc/mtbChef/GitOps-NMS/blob/main/SUPPORT.md)
 <!-- [![Commercial Support](https://badgen.net/badge/support/commercial/cyan?icon=awesome)](<Insert URL>) -->
 
-# Demo: Example of using the NGINX One Console REST API using a simple Python script driven by GitOps
+# Example of using the NGINX One Console REST API 
 This repository provides an example in Python of using the NGINX One Console API. There is a Github Actions script that pulls parameteres from this repository, including an nginx.conf config file, and passes those to the Python script, but the Python script is not tightly coupled to this and the Python script has no depdency on Github Actions and therefore can be taken and run outside of Github.
 
 ## Python Script
