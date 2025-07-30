@@ -3,7 +3,13 @@
 <!-- [![Commercial Support](https://badgen.net/badge/support/commercial/cyan?icon=awesome)](<Insert URL>) -->
 
 # Example of using the NGINX One Console REST API 
-This repository provides an example in Python of using the NGINX One Console API. There is a Github Actions script that pulls parameteres from this repository, including an nginx.conf config file, and passes those to the Python script, but the Python script is not tightly coupled to this and the Python script has no dependency on Github Actions and therefore can be taken and run outside of Github.
+This repository is not for production, and is not an official F5 project.
+This is a personal project intended only for learning purposes.
+Do not use this as-is for any production or critical purposes.
+
+This provides an example in Python of using the NGINX One Console API to update an NGINX instance. 
+
+There is a Github Actions script that pulls parameteres from this repository, including an nginx.conf config file, and passes those to the Python script, but the Python script is not tightly coupled to this and the Python script has no dependency on Github Actions and therefore can be taken and run outside of Github.
 
 ## TLDR GIF
 ![TLDR GIF](./nginx_one_console_api_example.gif)
