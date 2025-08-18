@@ -21,7 +21,7 @@ jobs:
       cancel-in-progress: true
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Checkout and set misc environment variables 
       run: |
         echo "MY_COMMIT_HASH=$(git show --pretty=format:"%H %s" -s HEAD)" >> $GITHUB_ENV
