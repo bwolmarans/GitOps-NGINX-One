@@ -33,7 +33,7 @@ jobs:
         echo "MIME_TYPES_CONFIG_FILE=`cat app-nyc-02/etc/nginx/mime.types | base64 -w 0`" >> $GITHUB_ENV
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.x'
     
